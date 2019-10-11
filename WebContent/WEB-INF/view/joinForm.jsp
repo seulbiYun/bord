@@ -50,6 +50,7 @@
 </script>
 </head>
 <body>
+	<p>git test를 위해 내용을 추가</p>
 	<form action = "join.do" method = "post">
 		<fieldset>
 			<legend>회원 가입</legend>
