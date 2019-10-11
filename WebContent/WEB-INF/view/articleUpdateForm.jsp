@@ -19,7 +19,7 @@
 				<input type = "text" name = "title" value="${article.title }">
 			</p>
 			<p>
-				<label>제목</label>
+				<label>내용</label>
 				<textarea rows="10" cols="60" name = "content">${article.content }</textarea>
 			</p>
 			<p>
