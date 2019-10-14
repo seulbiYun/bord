@@ -19,8 +19,7 @@ public class JoinHandler implements CommandHandler {
 		if(request.getMethod().equalsIgnoreCase("get")) {
 			return "/WEB-INF/view/joinForm.jsp";
 		}else if(request.getMethod().equalsIgnoreCase("post")) {
-			request.setCharacterEncoding("utf-8");
-			
+						
 			String memberId = request.getParameter("memberId");
 			String name = request.getParameter("name");
 			String password = request.getParameter("password");

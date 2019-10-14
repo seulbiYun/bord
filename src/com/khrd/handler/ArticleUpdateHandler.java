@@ -34,7 +34,7 @@ public class ArticleUpdateHandler implements CommandHandler{
 				JdbcUtil.close(conn);
 			}
 		}else if(request.getMethod().equalsIgnoreCase("post")) {
-			request.setCharacterEncoding("utf-8");
+			
 			String sNo = request.getParameter("no");
 			int no = Integer.parseInt(sNo);
 			String title = request.getParameter("title");
