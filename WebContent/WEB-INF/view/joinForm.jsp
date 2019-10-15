@@ -46,6 +46,30 @@
 				return false;//전송 취소
 			}
 		})
+		
+		$("#idOk").click(function(){
+			var id = $("input[name='memberId']").val();
+			if(id == ""){
+				$("input[name = 'memberId']").next().next().next().css("display","inline");
+				return false;//전송 취소
+			}
+			$.ajax({
+				url:"${pageContext.request.contextPath }/article/duplication.do",
+				type:"get",
+				data:{"id":$("input[name='memberId']").val()},
+				dataType:"json",
+				success:function(res){
+					console.log(res);
+					
+					if(res.userid == "notnull"){
+						alert("이미 존재하는 아이디입니다.");
+					}else if(res.userid == "null"){
+						alert("사용가능한 아이디입니다.");
+					}
+					
+				}
+			})
+		})
 	})
 </script>
 </head>
@@ -57,6 +81,8 @@
 			<p>
 				<label>아이디</label>
 				<input type = "text" name = "memberId">
+				<button id = "idOk" type = "button">중복확인</button>
+				<br>
 				<span class = "error">※ID(영어,숫자 6~15)를 입력하세요※첫 글자는 영어로</span>
 			</p>
 			<p>

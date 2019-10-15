@@ -1,0 +1,56 @@
+package com.khrd.handler;
+
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
+import com.khrd.controller.CommandHandler;
+import com.khrd.dao.MemberDAO;
+import com.khrd.dto.Member;
+import com.khrd.jdbc.ConnectionProvider;
+import com.khrd.jdbc.JdbcUtil;
+
+public class MemberDuplicationHandler implements CommandHandler {
+
+	@Override
+	public String process(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String userId = request.getParameter("id");
+		
+		Connection conn = null;
+		try {
+			conn = ConnectionProvider.getConnection();
+			MemberDAO dao = MemberDAO.getInstance();
+			Member member = dao.selectById(conn, userId);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("member", member);
+			
+			if(member == null) {
+				map.put("userid", "null");
+			}else {
+				map.put("userid", "notnull");
+			}
+			
+			ObjectMapper om = new ObjectMapper();
+			String json = om.writeValueAsString(map);
+			
+			response.setContentType("application/json;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println(json);
+			out.flush();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			JdbcUtil.close(conn);
+		}
+		return null;
+	}
+
+}
